@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { FiCheckCircle, FiArrowRight } from 'react-icons/fi';
+import { HiOutlineCode, HiOutlineServer, HiOutlineCube, HiOutlineDesktopComputer } from 'react-icons/hi';
 
 const HowItWorks = () => {
     const steps = [
@@ -49,9 +51,9 @@ const HowItWorks = () => {
             title: 'Compliance Decision',
             description: 'Based on the risk score, the system automatically approves, rejects, or flags for manual review.',
             details: [
-                'Risk < 30: Auto-approved ✅',
-                'Risk 30-85: Manual review required ⏳',
-                'Risk ≥ 85: Auto-rejected ❌',
+                'Risk < 30: Auto-approved',
+                'Risk 30-85: Manual review required',
+                'Risk ≥ 85: Auto-rejected',
             ],
         },
         {
@@ -71,7 +73,7 @@ const HowItWorks = () => {
             {/* Hero */}
             <section style={{
                 background: 'linear-gradient(180deg, #fff 0%, #f5f5f7 100%)',
-                padding: 'var(--spacing-3xl) 0',
+                padding: 'var(--spacing-3xl) var(--spacing-lg)',
             }}>
                 <div className="container">
                     <motion.div
@@ -90,7 +92,7 @@ const HowItWorks = () => {
             </section>
 
             {/* Process Steps */}
-            <section style={{ padding: 'var(--spacing-3xl) 0' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)' }}>
                 <div className="container">
                     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                         {steps.map((step, index) => (
@@ -100,17 +102,23 @@ const HowItWorks = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 style={{
-                                    marginBottom: 'var(--spacing-2xl)',
+                                    marginBottom: index < steps.length - 1 ? 'var(--spacing-2xl)' : 0,
                                     position: 'relative',
                                 }}
                             >
-                                <div style={{ display: 'flex', gap: 'var(--spacing-xl)', alignItems: 'flex-start' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    gap: 'var(--spacing-lg)',
+                                    alignItems: 'flex-start',
+                                    flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+                                }}>
                                     {/* Step Number */}
                                     <div style={{
-                                        fontSize: 'var(--font-size-4xl)',
+                                        fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                                         fontWeight: 700,
                                         color: 'var(--color-red)',
                                         minWidth: '80px',
+                                        lineHeight: 1,
                                     }}>
                                         {step.number}
                                     </div>
@@ -118,7 +126,7 @@ const HowItWorks = () => {
                                     {/* Content */}
                                     <div style={{ flex: 1 }}>
                                         <h3 style={{
-                                            fontSize: 'var(--font-size-2xl)',
+                                            fontSize: 'clamp(1.25rem, 3vw, 2rem)',
                                             fontWeight: 700,
                                             marginBottom: 'var(--spacing-sm)',
                                             color: 'var(--color-dark-gray)',
@@ -153,7 +161,7 @@ const HowItWorks = () => {
                                                         color: 'var(--color-medium-gray)',
                                                     }}
                                                 >
-                                                    <span style={{ color: 'var(--color-red)', marginTop: '2px' }}>•</span>
+                                                    <FiCheckCircle style={{ color: 'var(--color-red)', marginTop: '2px', flexShrink: 0 }} size={16} />
                                                     <span>{detail}</span>
                                                 </div>
                                             ))}
@@ -170,6 +178,7 @@ const HowItWorks = () => {
                                         width: '2px',
                                         height: 'var(--spacing-2xl)',
                                         background: 'linear-gradient(180deg, var(--color-red) 0%, transparent 100%)',
+                                        display: window.innerWidth < 768 ? 'none' : 'block',
                                     }} />
                                 )}
                             </motion.div>
@@ -179,10 +188,10 @@ const HowItWorks = () => {
             </section>
 
             {/* Technical Architecture */}
-            <section style={{ padding: 'var(--spacing-3xl) 0', background: 'var(--color-off-white)' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)', background: 'var(--color-off-white)' }}>
                 <div className="container">
                     <h2 style={{
-                        fontSize: 'var(--font-size-2xl)',
+                        fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                         fontWeight: 700,
                         marginBottom: 'var(--spacing-xl)',
                         color: 'var(--color-dark-gray)',
@@ -198,21 +207,25 @@ const HowItWorks = () => {
                     }}>
                         {[
                             {
+                                icon: <HiOutlineCube size={40} />,
                                 title: 'Smart Contracts',
                                 tech: 'Solidity on Flare',
                                 description: 'ComplianceEngine, SmartAccountFactory, FDCVerifier contracts deployed on Coston2 testnet',
                             },
                             {
+                                icon: <HiOutlineServer size={40} />,
                                 title: 'Backend API',
                                 tech: 'Go + Gin Framework',
                                 description: 'High-performance REST API with WebSocket support for real-time updates',
                             },
                             {
+                                icon: <HiOutlineCode size={40} />,
                                 title: 'AI Risk Engine',
                                 tech: 'Node.js + Express',
                                 description: 'Multi-factor risk scoring algorithm with 5+ analysis dimensions',
                             },
                             {
+                                icon: <HiOutlineDesktopComputer size={40} />,
                                 title: 'Frontend',
                                 tech: 'React + Vite',
                                 description: 'Modern, responsive UI with MetaMask integration and real-time updates',
@@ -224,7 +237,14 @@ const HowItWorks = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 className="card"
+                                style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
                             >
+                                <div style={{
+                                    color: 'var(--color-red)',
+                                    marginBottom: 'var(--spacing-md)',
+                                }}>
+                                    {component.icon}
+                                </div>
                                 <div style={{
                                     fontSize: 'var(--font-size-xs)',
                                     color: 'var(--color-red)',
@@ -257,10 +277,10 @@ const HowItWorks = () => {
             </section>
 
             {/* Performance Metrics */}
-            <section style={{ padding: 'var(--spacing-3xl) 0' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)' }}>
                 <div className="container">
                     <h2 style={{
-                        fontSize: 'var(--font-size-2xl)',
+                        fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                         fontWeight: 700,
                         marginBottom: 'var(--spacing-xl)',
                         color: 'var(--color-dark-gray)',
@@ -273,7 +293,8 @@ const HowItWorks = () => {
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                         gap: 'var(--spacing-lg)',
-                        textAlign: 'center',
+                        maxWidth: '1200px',
+                        margin: '0 auto',
                     }}>
                         {[
                             { metric: '< 2s', label: 'End-to-End Processing' },
@@ -289,11 +310,27 @@ const HowItWorks = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.05 }}
                                 className="stat-card"
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    textAlign: 'center',
+                                    padding: 'var(--spacing-xl)',
+                                }}
                             >
-                                <div className="stat-value" style={{ color: 'var(--color-red)' }}>
+                                <div style={{
+                                    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                                    fontWeight: 700,
+                                    lineHeight: 1,
+                                    marginBottom: 'var(--spacing-xs)',
+                                    color: 'var(--color-red)',
+                                }}>
                                     {item.metric}
                                 </div>
-                                <div className="stat-label">{item.label}</div>
+                                <div className="stat-label" style={{ textAlign: 'center' }}>
+                                    {item.label}
+                                </div>
                             </motion.div>
                         ))}
                     </div>

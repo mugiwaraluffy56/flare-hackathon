@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -9,67 +9,11 @@ import HowItWorks from './pages/HowItWorks';
 import About from './pages/About';
 import './styles/index.css';
 
-const Navigation = () => {
-    const location = useLocation();
-
-    const isActive = (path) => location.pathname === path;
-
-    const navItems = [
-        { path: '/', label: 'Home' },
-        { path: '/features', label: 'Features' },
-        { path: '/how-it-works', label: 'How It Works' },
-        { path: '/dashboard', label: 'Dashboard' },
-        { path: '/submit', label: 'Submit Asset' },
-        { path: '/about', label: 'About' },
-    ];
-
-    return (
-        <nav style={{
-            borderBottom: '1px solid rgba(0, 0, 0, 0.06)',
-            background: 'var(--color-white)',
-            overflowX: 'auto',
-        }}>
-            <div className="container" style={{
-                display: 'flex',
-                gap: '2rem',
-                paddingTop: 'var(--spacing-sm)',
-                paddingBottom: 0,
-                minWidth: 'max-content',
-            }}>
-                {navItems.map(item => (
-                    <Link
-                        key={item.path}
-                        to={item.path}
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <motion.div
-                            whileHover={{ y: -2 }}
-                            style={{
-                                padding: 'var(--spacing-sm) 0',
-                                fontSize: 'var(--font-size-sm)',
-                                fontWeight: 600,
-                                color: isActive(item.path) ? 'var(--color-red)' : 'var(--color-gray)',
-                                borderBottom: isActive(item.path) ? '2px solid var(--color-red)' : '2px solid transparent',
-                                transition: 'all var(--transition-fast)',
-                                cursor: 'pointer',
-                                whiteSpace: 'nowrap',
-                            }}
-                        >
-                            {item.label}
-                        </motion.div>
-                    </Link>
-                ))}
-            </div>
-        </nav>
-    );
-};
-
 function App() {
     return (
         <Router>
             <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <Header />
-                <Navigation />
 
                 <main style={{ flex: 1 }}>
                     <Routes>

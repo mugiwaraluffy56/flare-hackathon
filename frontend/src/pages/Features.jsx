@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import { HiOutlineChartBar, HiOutlineLightningBolt, HiOutlineGlobe, HiOutlineShieldCheck } from 'react-icons/hi';
+import { FiTrendingUp, FiClock, FiLock, FiCheckCircle } from 'react-icons/fi';
+import { RiRobot2Line } from 'react-icons/ri';
 
 const Features = () => {
     const features = [
@@ -6,19 +9,19 @@ const Features = () => {
             category: 'Flare Integration',
             items: [
                 {
-                    icon: '🔗',
+                    icon: <HiOutlineChartBar size={40} />,
                     title: 'Flare Data Connector (FDC)',
                     description: 'Verify transactions from external blockchains with cryptographic proof. FDC enables trustless cross-chain verification without relying on centralized oracles.',
                     benefits: ['Trustless verification', 'Cross-chain support', 'Cryptographic security'],
                 },
                 {
-                    icon: '📊',
+                    icon: <FiTrendingUp size={40} />,
                     title: 'FTSO Price Feeds',
                     description: 'Access real-time, decentralized price data for accurate asset valuation and risk assessment. FTSO provides reliable price feeds without single points of failure.',
                     benefits: ['Decentralized pricing', 'Real-time updates', 'High accuracy'],
                 },
                 {
-                    icon: '🤖',
+                    icon: <HiOutlineShieldCheck size={40} />,
                     title: 'Smart Accounts',
                     description: 'Enable autonomous transaction execution based on compliance status. Smart Accounts can automatically approve or reject transactions without manual intervention.',
                     benefits: ['Autonomous execution', 'Programmable logic', 'Gas optimization'],
@@ -29,19 +32,19 @@ const Features = () => {
             category: 'AI & Analytics',
             items: [
                 {
-                    icon: '🧠',
+                    icon: <RiRobot2Line size={40} />,
                     title: 'Multi-Factor Risk Analysis',
                     description: 'Our AI engine analyzes 5+ risk factors including asset type, volatility, transaction size, FDC verification, and user history for comprehensive risk assessment.',
                     benefits: ['99% accuracy', 'Multi-dimensional analysis', 'Continuous learning'],
                 },
                 {
-                    icon: '⚡',
+                    icon: <HiOutlineLightningBolt size={40} />,
                     title: 'Real-Time Processing',
                     description: 'Get compliance results in under 2 seconds. Our optimized pipeline processes FDC verification, FTSO price fetching, and AI analysis concurrently.',
                     benefits: ['< 2s response time', 'Concurrent processing', 'Scalable architecture'],
                 },
                 {
-                    icon: '📈',
+                    icon: <HiOutlineChartBar size={40} />,
                     title: 'Historical Analytics',
                     description: 'Track compliance trends, risk patterns, and approval rates over time. Gain insights into your transaction history and compliance performance.',
                     benefits: ['Trend analysis', 'Performance metrics', 'Exportable reports'],
@@ -52,19 +55,19 @@ const Features = () => {
             category: 'Security & Compliance',
             items: [
                 {
-                    icon: '🔒',
+                    icon: <FiLock size={40} />,
                     title: 'Cryptographic Security',
                     description: 'All transactions are verified using cryptographic proofs and stored on-chain for immutable audit trails. Your data is secure and tamper-proof.',
                     benefits: ['Immutable records', 'Cryptographic proofs', 'On-chain storage'],
                 },
                 {
-                    icon: '✅',
+                    icon: <FiCheckCircle size={40} />,
                     title: 'Automated Compliance',
                     description: 'Reduce manual review time by 90% with automated compliance checks. Our system handles routine approvals while flagging high-risk transactions for review.',
                     benefits: ['90% time savings', 'Reduced errors', '24/7 availability'],
                 },
                 {
-                    icon: '🌍',
+                    icon: <HiOutlineGlobe size={40} />,
                     title: 'Multi-Chain Support',
                     description: 'Support for 100+ assets across Bitcoin, Ethereum, XRP, Dogecoin, Litecoin, and more. Seamlessly verify transactions from any supported blockchain.',
                     benefits: ['100+ assets', '5+ blockchains', 'Expanding coverage'],
@@ -78,7 +81,7 @@ const Features = () => {
             {/* Hero */}
             <section style={{
                 background: 'linear-gradient(180deg, #fff 0%, #f5f5f7 100%)',
-                padding: 'var(--spacing-3xl) 0',
+                padding: 'var(--spacing-3xl) var(--spacing-lg)',
             }}>
                 <div className="container">
                     <motion.div
@@ -101,7 +104,7 @@ const Features = () => {
                 <section
                     key={categoryIndex}
                     style={{
-                        padding: 'var(--spacing-3xl) 0',
+                        padding: 'var(--spacing-3xl) var(--spacing-lg)',
                         background: categoryIndex % 2 === 0 ? 'var(--color-white)' : 'var(--color-off-white)',
                     }}
                 >
@@ -112,7 +115,7 @@ const Features = () => {
                             transition={{ delay: categoryIndex * 0.1 }}
                         >
                             <h2 style={{
-                                fontSize: 'var(--font-size-2xl)',
+                                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                                 fontWeight: 700,
                                 marginBottom: 'var(--spacing-xl)',
                                 color: 'var(--color-dark-gray)',
@@ -134,7 +137,12 @@ const Features = () => {
                                         transition={{ delay: (categoryIndex * 0.1) + (index * 0.1) }}
                                         className="card"
                                     >
-                                        <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>
+                                        <div style={{
+                                            color: 'var(--color-red)',
+                                            marginBottom: 'var(--spacing-md)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}>
                                             {feature.icon}
                                         </div>
                                         <h3 style={{
@@ -169,8 +177,8 @@ const Features = () => {
                                                         color: 'var(--color-medium-gray)',
                                                     }}
                                                 >
-                                                    <span style={{ color: 'var(--color-red)' }}>✓</span>
-                                                    {benefit}
+                                                    <FiCheckCircle style={{ color: 'var(--color-red)', flexShrink: 0 }} size={16} />
+                                                    <span>{benefit}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -183,10 +191,10 @@ const Features = () => {
             ))}
 
             {/* Comparison Table */}
-            <section style={{ padding: 'var(--spacing-3xl) 0' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)' }}>
                 <div className="container">
                     <h2 style={{
-                        fontSize: 'var(--font-size-2xl)',
+                        fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                         fontWeight: 700,
                         marginBottom: 'var(--spacing-xl)',
                         color: 'var(--color-dark-gray)',
@@ -195,7 +203,7 @@ const Features = () => {
                         FACE vs Traditional Compliance
                     </h2>
 
-                    <div className="table-container">
+                    <div className="table-container" style={{ overflowX: 'auto' }}>
                         <table>
                             <thead>
                                 <tr>
@@ -220,7 +228,7 @@ const Features = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.05 }}
                                     >
-                                        <td style={{ fontWeight: 600 }}>{row.feature}</td>
+                                        <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{row.feature}</td>
                                         <td style={{ color: 'var(--color-gray)' }}>{row.traditional}</td>
                                         <td style={{ color: 'var(--color-red)', fontWeight: 600 }}>{row.face}</td>
                                     </motion.tr>

@@ -1,13 +1,26 @@
 import { motion } from 'framer-motion';
 import { useWeb3 } from '../hooks/useWeb3';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
     const { account, isConnected, isCorrectNetwork, connectWallet, switchToCoston2, disconnectWallet } = useWeb3();
+    const location = useLocation();
 
     const formatAddress = (address) => {
         if (!address) return '';
         return `${address.slice(0, 6)}...${address.slice(-4)}`;
     };
+
+    const isActive = (path) => location.pathname === path;
+
+    const navItems = [
+        { path: '/', label: 'Home' },
+        { path: '/features', label: 'Features' },
+        { path: '/how-it-works', label: 'How It Works' },
+        { path: '/dashboard', label: 'Dashboard' },
+        { path: '/submit', label: 'Submit' },
+        { path: '/about', label: 'About' },
+    ];
 
     return (
         <header style={{
@@ -23,42 +36,76 @@ const Header = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 height: '72px',
+                gap: 'var(--spacing-lg)',
             }}>
-                {/* Logo - Flare style */}
-                <motion.div
-                    whileHover={{ opacity: 0.8 }}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        cursor: 'pointer',
-                    }}
-                >
-                    <div style={{
-                        width: '36px',
-                        height: '36px',
-                        background: 'linear-gradient(135deg, #ff3b30 0%, #ff6b5e 100%)',
-                        borderRadius: '10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        fontWeight: 700,
-                        fontSize: '1.25rem',
-                    }}>
-                        F
-                    </div>
-                    <span style={{
-                        fontSize: '1.375rem',
-                        fontWeight: 600,
-                        color: '#666',
-                        letterSpacing: '-0.01em',
-                    }}>
-                        FACE
-                    </span>
-                </motion.div>
+                {/* Logo */}
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                    <motion.div
+                        whileHover={{ opacity: 0.8 }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <div style={{
+                            width: '36px',
+                            height: '36px',
+                            background: 'linear-gradient(135deg, #ff3b30 0%, #ff6b5e 100%)',
+                            borderRadius: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: 700,
+                            fontSize: '1.25rem',
+                        }}>
+                            F
+                        </div>
+                        <span style={{
+                            fontSize: '1.375rem',
+                            fontWeight: 600,
+                            color: '#666',
+                            letterSpacing: '-0.01em',
+                        }}>
+                            FACE
+                        </span>
+                    </motion.div>
+                </Link>
 
-                {/* Wallet Connection - Flare style */}
+                {/* Navigation - Desktop */}
+                <nav style={{
+                    display: 'flex',
+                    gap: '1.5rem',
+                    alignItems: 'center',
+                    flex: 1,
+                    justifyContent: 'center',
+                }}>
+                    {navItems.map(item => (
+                        <Link
+                            key={item.path}
+                            to={item.path}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <motion.div
+                                whileHover={{ color: 'var(--color-red)' }}
+                                style={{
+                                    fontSize: 'var(--font-size-sm)',
+                                    fontWeight: 600,
+                                    color: isActive(item.path) ? 'var(--color-red)' : 'var(--color-gray)',
+                                    transition: 'all var(--transition-fast)',
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                {item.label}
+                            </motion.div>
+                        </Link>
+                    ))}
+                </nav>
+
+                {/* Wallet Connection */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     {isConnected && !isCorrectNetwork && (
                         <motion.button
@@ -75,6 +122,7 @@ const Header = () => {
                                 fontWeight: 500,
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             Switch Network
@@ -119,6 +167,7 @@ const Header = () => {
                                     fontWeight: 500,
                                     cursor: 'pointer',
                                     transition: 'all 0.2s',
+                                    whiteSpace: 'nowrap',
                                 }}
                             >
                                 Disconnect
@@ -140,6 +189,7 @@ const Header = () => {
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
                                 boxShadow: '0 2px 8px rgba(255, 59, 48, 0.2)',
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             Connect Wallet

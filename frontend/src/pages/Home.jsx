@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useWeb3 } from '../hooks/useWeb3';
+import { FiArrowRight, FiCheckCircle, FiClock, FiTrendingUp, FiShield } from 'react-icons/fi';
+import { HiOutlineChartBar, HiOutlineLightningBolt, HiOutlineGlobe } from 'react-icons/hi';
+import { RiRobot2Line } from 'react-icons/ri';
 
 const Home = () => {
     const { connectWallet, isConnected } = useWeb3();
@@ -10,7 +13,7 @@ const Home = () => {
             {/* Hero Section */}
             <section style={{
                 background: 'linear-gradient(180deg, #fff 0%, #f5f5f7 100%)',
-                padding: 'var(--spacing-3xl) 0',
+                padding: 'var(--spacing-3xl) var(--spacing-lg)',
             }}>
                 <div className="container">
                     <motion.div
@@ -20,7 +23,7 @@ const Home = () => {
                         style={{ textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}
                     >
                         <h1 style={{
-                            fontSize: 'var(--font-size-5xl)',
+                            fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
                             fontWeight: 700,
                             lineHeight: 1.1,
                             marginBottom: 'var(--spacing-lg)',
@@ -30,22 +33,31 @@ const Home = () => {
                             The Future of <span style={{ color: 'var(--color-red)' }}>Compliance</span> is Here
                         </h1>
                         <p style={{
-                            fontSize: 'var(--font-size-xl)',
+                            fontSize: 'clamp(1rem, 2vw, 1.5rem)',
                             color: 'var(--color-gray)',
                             marginBottom: 'var(--spacing-xl)',
                             lineHeight: 1.6,
+                            maxWidth: '700px',
+                            margin: '0 auto var(--spacing-xl)',
                         }}>
                             FACE leverages Flare's FDC, FTSO, and Smart Accounts to provide real-time, autonomous compliance checks for cross-chain transactions.
                         </p>
-                        <div style={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <div style={{
+                            display: 'flex',
+                            gap: 'var(--spacing-md)',
+                            justifyContent: 'center',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                        }}>
                             {isConnected ? (
-                                <Link to="/submit">
+                                <Link to="/submit" style={{ textDecoration: 'none' }}>
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                         className="btn btn-primary btn-large"
+                                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                                     >
-                                        Submit Asset →
+                                        Submit Asset <FiArrowRight />
                                     </motion.button>
                                 </Link>
                             ) : (
@@ -58,7 +70,7 @@ const Home = () => {
                                     Get Started
                                 </motion.button>
                             )}
-                            <Link to="/how-it-works">
+                            <Link to="/how-it-works" style={{ textDecoration: 'none' }}>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
@@ -73,7 +85,7 @@ const Home = () => {
             </section>
 
             {/* Stats Section */}
-            <section style={{ padding: 'var(--spacing-3xl) 0' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)' }}>
                 <div className="container">
                     <div style={{
                         display: 'grid',
@@ -82,10 +94,10 @@ const Home = () => {
                         textAlign: 'center',
                     }}>
                         {[
-                            { value: '< 2s', label: 'Processing Time' },
-                            { value: '99%', label: 'Accuracy Rate' },
-                            { value: '24/7', label: 'Availability' },
-                            { value: '100+', label: 'Assets Supported' },
+                            { value: '< 2s', label: 'Processing Time', icon: <FiClock /> },
+                            { value: '99%', label: 'Accuracy Rate', icon: <FiCheckCircle /> },
+                            { value: '24/7', label: 'Availability', icon: <HiOutlineLightningBolt /> },
+                            { value: '100+', label: 'Assets Supported', icon: <HiOutlineGlobe /> },
                         ].map((stat, index) => (
                             <motion.div
                                 key={index}
@@ -94,10 +106,20 @@ const Home = () => {
                                 transition={{ delay: index * 0.1 }}
                             >
                                 <div style={{
-                                    fontSize: 'var(--font-size-4xl)',
+                                    fontSize: '2rem',
+                                    color: 'var(--color-red)',
+                                    marginBottom: 'var(--spacing-sm)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}>
+                                    {stat.icon}
+                                </div>
+                                <div style={{
+                                    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
                                     fontWeight: 700,
                                     color: 'var(--color-red)',
                                     marginBottom: 'var(--spacing-xs)',
+                                    lineHeight: 1,
                                 }}>
                                     {stat.value}
                                 </div>
@@ -117,9 +139,9 @@ const Home = () => {
             </section>
 
             {/* Features Grid */}
-            <section style={{ padding: 'var(--spacing-3xl) 0', background: 'var(--color-off-white)' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)', background: 'var(--color-off-white)' }}>
                 <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)', maxWidth: '700px', margin: '0 auto var(--spacing-2xl)' }}>
                         <h2 className="section-title">Powered by Flare</h2>
                         <p className="section-subtitle">
                             Leveraging cutting-edge blockchain technology for unparalleled compliance
@@ -133,22 +155,22 @@ const Home = () => {
                     }}>
                         {[
                             {
-                                icon: '🔗',
+                                icon: <HiOutlineChartBar size={48} />,
                                 title: 'Flare Data Connector',
                                 description: 'Verify external chain transactions with cryptographic proof',
                             },
                             {
-                                icon: '📊',
+                                icon: <FiTrendingUp size={48} />,
                                 title: 'FTSO Price Feeds',
                                 description: 'Real-time decentralized price data for accurate risk assessment',
                             },
                             {
-                                icon: '🤖',
+                                icon: <FiShield size={48} />,
                                 title: 'Smart Accounts',
                                 description: 'Autonomous transaction execution based on compliance status',
                             },
                             {
-                                icon: '🧠',
+                                icon: <RiRobot2Line size={48} />,
                                 title: 'AI Risk Engine',
                                 description: 'Multi-factor analysis for intelligent compliance decisions',
                             },
@@ -159,9 +181,15 @@ const Home = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 + 0.3 }}
                                 className="card"
-                                style={{ textAlign: 'center' }}
+                                style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                             >
-                                <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>
+                                <div style={{
+                                    color: 'var(--color-red)',
+                                    marginBottom: 'var(--spacing-md)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
                                     {feature.icon}
                                 </div>
                                 <h3 style={{
@@ -186,9 +214,9 @@ const Home = () => {
             </section>
 
             {/* How It Works Preview */}
-            <section style={{ padding: 'var(--spacing-3xl) 0' }}>
+            <section style={{ padding: 'var(--spacing-3xl) var(--spacing-lg)' }}>
                 <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)', maxWidth: '700px', margin: '0 auto var(--spacing-2xl)' }}>
                         <h2 className="section-title">Simple, Fast, Secure</h2>
                         <p className="section-subtitle">
                             Compliance checks in three easy steps
@@ -197,8 +225,10 @@ const Home = () => {
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                         gap: 'var(--spacing-xl)',
+                        maxWidth: '1000px',
+                        margin: '0 auto',
                     }}>
                         {[
                             { step: '01', title: 'Submit Transaction', description: 'Provide transaction details from any supported blockchain' },
@@ -210,13 +240,14 @@ const Home = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.2 }}
-                                style={{ position: 'relative' }}
+                                style={{ position: 'relative', textAlign: 'center' }}
                             >
                                 <div style={{
-                                    fontSize: 'var(--font-size-4xl)',
+                                    fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                                     fontWeight: 700,
                                     color: 'rgba(255, 59, 48, 0.1)',
-                                    marginBottom: 'var(--spacing-sm)',
+                                    marginBottom: 'var(--spacing-md)',
+                                    lineHeight: 1,
                                 }}>
                                     {item.step}
                                 </div>
@@ -240,13 +271,14 @@ const Home = () => {
                     </div>
 
                     <div style={{ textAlign: 'center', marginTop: 'var(--spacing-2xl)' }}>
-                        <Link to="/how-it-works">
+                        <Link to="/how-it-works" style={{ textDecoration: 'none' }}>
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="btn btn-secondary"
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                             >
-                                View Full Process →
+                                View Full Process <FiArrowRight />
                             </motion.button>
                         </Link>
                     </div>
@@ -255,7 +287,7 @@ const Home = () => {
 
             {/* CTA Section */}
             <section style={{
-                padding: 'var(--spacing-3xl) 0',
+                padding: 'var(--spacing-3xl) var(--spacing-lg)',
                 background: 'linear-gradient(135deg, #ff3b30 0%, #ff6b5e 100%)',
             }}>
                 <div className="container">
@@ -265,22 +297,24 @@ const Home = () => {
                         style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto' }}
                     >
                         <h2 style={{
-                            fontSize: 'var(--font-size-3xl)',
+                            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                             fontWeight: 700,
                             color: 'white',
                             marginBottom: 'var(--spacing-md)',
+                            lineHeight: 1.2,
                         }}>
                             Ready to Transform Compliance?
                         </h2>
                         <p style={{
-                            fontSize: 'var(--font-size-lg)',
+                            fontSize: 'clamp(1rem, 2vw, 1.125rem)',
                             color: 'rgba(255, 255, 255, 0.9)',
                             marginBottom: 'var(--spacing-xl)',
+                            lineHeight: 1.6,
                         }}>
                             Join the future of decentralized compliance with FACE
                         </p>
                         {isConnected ? (
-                            <Link to="/submit">
+                            <Link to="/submit" style={{ textDecoration: 'none' }}>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
@@ -293,6 +327,7 @@ const Home = () => {
                                         fontSize: 'var(--font-size-lg)',
                                         fontWeight: 600,
                                         cursor: 'pointer',
+                                        display: 'inline-block',
                                     }}
                                 >
                                     Submit Your First Asset

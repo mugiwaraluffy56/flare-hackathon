@@ -33,12 +33,12 @@ type ComplianceRecord struct {
 
 // SubmitAssetRequest represents the request to submit an asset for compliance
 type SubmitAssetRequest struct {
-	AssetType    string  `json:"asset_type" binding:"required"`
-	Amount       float64 `json:"amount" binding:"required,gt=0"`
-	TxHash       string  `json:"tx_hash" binding:"required"`
-	SourceChain  string  `json:"source_chain" binding:"required"`
-	BlockNumber  uint64  `json:"block_number" binding:"required"`
-	UserAddress  string  `json:"user_address" binding:"required"`
+	AssetType   string  `json:"asset_type" binding:"required" validate:"required,asset_type"`
+	Amount      float64 `json:"amount" binding:"required,gt=0" validate:"required,gt=0"`
+	TxHash      string  `json:"tx_hash" binding:"required" validate:"required,tx_hash"`
+	SourceChain string  `json:"source_chain" binding:"required" validate:"required,source_chain"`
+	BlockNumber uint64  `json:"block_number" binding:"required" validate:"required"`
+	UserAddress string  `json:"user_address" binding:"required" validate:"required,eth_address"`
 }
 
 // RiskAnalysisRequest represents request to AI engine
@@ -53,8 +53,8 @@ type RiskAnalysisRequest struct {
 
 // RiskAnalysisResponse represents response from AI engine
 type RiskAnalysisResponse struct {
-	RiskScore      uint8   `json:"risk_score"`
-	Recommendation string  `json:"recommendation"`
+	RiskScore      uint8    `json:"risk_score"`
+	Recommendation string   `json:"recommendation"`
 	Factors        []string `json:"factors"`
 }
 
