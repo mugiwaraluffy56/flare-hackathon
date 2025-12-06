@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.exe
+*.out
+backend/api
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Smart contract artifacts
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+
+# AI models
+ai-engine/models/*.pkl
+ai-engine/models/*.h5
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+tmp/
+temp/

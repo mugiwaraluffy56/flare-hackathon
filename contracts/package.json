@@ -1,0 +1,16 @@
+{
+  "name": "face-contracts",
+  "version": "1.0.0",
+  "description": "FACE - Flare Autonomous Compliance Engine Smart Contracts",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:coston2": "hardhat run deployment/deploy.js --network coston2",
+    "verify": "hardhat verify --network coston2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "hardhat": "^2.19.4"
+  }
+}
