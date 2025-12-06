@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useWeb3 } from '../hooks/useWeb3';
-import { useWebSocket } from '../hooks/useWebSocket';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 
@@ -50,7 +49,7 @@ const AssetSubmission = () => {
 
             setResult(response.data);
 
-            // Reset form on success
+            // Reset form
             setFormData({
                 assetType: 'BTC',
                 amount: '',
@@ -65,37 +64,52 @@ const AssetSubmission = () => {
         }
     };
 
-    const getStatusBadge = (status) => {
-        const statusMap = {
-            'APPROVED': 'badge-success',
-            'REJECTED': 'badge-error',
-            'UNDER_REVIEW': 'badge-warning',
-            'PENDING': 'badge-info',
+    const getStatusColor = (status) => {
+        const colorMap = {
+            'APPROVED': 'var(--color-success)',
+            'REJECTED': 'var(--color-error)',
+            'UNDER_REVIEW': 'var(--color-warning)',
+            'PENDING': 'var(--color-gray)',
         };
-        return statusMap[status] || 'badge-info';
+        return colorMap[status] || 'var(--color-gray)';
     };
 
     return (
-        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ paddingTop: 'var(--spacing-2xl)', paddingBottom: 'var(--spacing-3xl)' }}>
+            {/* Hero Section */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                className="hero"
+                style={{ paddingTop: 0 }}
             >
-                <div className="text-center mb-xl">
-                    <h2 className="text-4xl font-extrabold mb-md">
-                        Submit Asset for <span className="text-red">Compliance Check</span>
-                    </h2>
-                    <p className="text-lg text-gray-300">
-                        Automated risk assessment powered by Flare's FDC, FTSO, and AI
-                    </p>
-                </div>
+                <h1 className="hero-title">
+                    Submit Asset for <span style={{ color: 'var(--color-red)' }}>Compliance</span>
+                </h1>
+                <p className="hero-subtitle">
+                    Automated risk assessment powered by Flare's FDC, FTSO, and AI
+                </p>
+            </motion.div>
 
-                <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-                    <form onSubmit={handleSubmit} className="glass-card" style={{ padding: '2rem' }}>
+            <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+                {/* Form */}
+                <motion.form
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    onSubmit={handleSubmit}
+                    className="card"
+                >
+                    <div style={{ display: 'grid', gap: 'var(--spacing-lg)' }}>
                         {/* Asset Type */}
-                        <div className="mb-lg">
-                            <label className="text-sm font-semibold text-gray-200 mb-sm" style={{ display: 'block' }}>
+                        <div>
+                            <label style={{
+                                display: 'block',
+                                fontSize: 'var(--font-size-sm)',
+                                fontWeight: 600,
+                                color: 'var(--color-dark-gray)',
+                                marginBottom: 'var(--spacing-xs)',
+                            }}>
                                 Asset Type
                             </label>
                             <select
@@ -112,8 +126,14 @@ const AssetSubmission = () => {
                         </div>
 
                         {/* Amount */}
-                        <div className="mb-lg">
-                            <label className="text-sm font-semibold text-gray-200 mb-sm" style={{ display: 'block' }}>
+                        <div>
+                            <label style={{
+                                display: 'block',
+                                fontSize: 'var(--font-size-sm)',
+                                fontWeight: 600,
+                                color: 'var(--color-dark-gray)',
+                                marginBottom: 'var(--spacing-xs)',
+                            }}>
                                 Amount
                             </label>
                             <input
@@ -129,8 +149,14 @@ const AssetSubmission = () => {
                         </div>
 
                         {/* Source Chain */}
-                        <div className="mb-lg">
-                            <label className="text-sm font-semibold text-gray-200 mb-sm" style={{ display: 'block' }}>
+                        <div>
+                            <label style={{
+                                display: 'block',
+                                fontSize: 'var(--font-size-sm)',
+                                fontWeight: 600,
+                                color: 'var(--color-dark-gray)',
+                                marginBottom: 'var(--spacing-xs)',
+                            }}>
                                 Source Chain
                             </label>
                             <select
@@ -147,8 +173,14 @@ const AssetSubmission = () => {
                         </div>
 
                         {/* Transaction Hash */}
-                        <div className="mb-lg">
-                            <label className="text-sm font-semibold text-gray-200 mb-sm" style={{ display: 'block' }}>
+                        <div>
+                            <label style={{
+                                display: 'block',
+                                fontSize: 'var(--font-size-sm)',
+                                fontWeight: 600,
+                                color: 'var(--color-dark-gray)',
+                                marginBottom: 'var(--spacing-xs)',
+                            }}>
                                 Transaction Hash
                             </label>
                             <input
@@ -163,8 +195,14 @@ const AssetSubmission = () => {
                         </div>
 
                         {/* Block Number */}
-                        <div className="mb-lg">
-                            <label className="text-sm font-semibold text-gray-200 mb-sm" style={{ display: 'block' }}>
+                        <div>
+                            <label style={{
+                                display: 'block',
+                                fontSize: 'var(--font-size-sm)',
+                                fontWeight: 600,
+                                color: 'var(--color-dark-gray)',
+                                marginBottom: 'var(--spacing-xs)',
+                            }}>
                                 Block Number
                             </label>
                             <input
@@ -185,13 +223,12 @@ const AssetSubmission = () => {
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
                                     exit={{ opacity: 0, height: 0 }}
-                                    className="mb-lg"
                                     style={{
-                                        padding: '1rem',
+                                        padding: 'var(--spacing-md)',
                                         background: 'rgba(255, 59, 48, 0.1)',
-                                        border: '1px solid rgba(255, 59, 48, 0.3)',
-                                        borderRadius: 'var(--radius-md)',
+                                        borderRadius: 'var(--radius-lg)',
                                         color: 'var(--color-error)',
+                                        fontSize: 'var(--font-size-sm)',
                                     }}
                                 >
                                     {error}
@@ -201,75 +238,124 @@ const AssetSubmission = () => {
 
                         {/* Submit Button */}
                         <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
                             type="submit"
                             disabled={isSubmitting || !isConnected || !isCorrectNetwork}
-                            className="btn btn-primary"
-                            style={{ width: '100%', fontSize: 'var(--font-size-lg)' }}
+                            className="btn btn-primary btn-large"
+                            style={{ width: '100%', marginTop: 'var(--spacing-sm)' }}
                         >
-                            {isSubmitting ? (
-                                <span className="flex items-center gap-sm">
-                                    <span className="animate-pulse">●</span> Analyzing...
-                                </span>
-                            ) : (
-                                'Submit for Compliance Check'
-                            )}
+                            {isSubmitting ? 'Analyzing...' : 'Submit for Compliance Check'}
                         </motion.button>
-                    </form>
+                    </div>
+                </motion.form>
 
-                    {/* Result Card */}
-                    <AnimatePresence>
-                        {result && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                                className="glass-card mt-xl animate-glow"
-                                style={{ padding: '2rem' }}
-                            >
-                                <div className="text-center mb-lg">
-                                    <h3 className="text-2xl font-bold mb-md">Compliance Result</h3>
-                                    <span className={`badge ${getStatusBadge(result.status)}`} style={{ fontSize: 'var(--font-size-base)', padding: '0.5rem 1.5rem' }}>
-                                        {result.status}
+                {/* Result Card */}
+                <AnimatePresence>
+                    {result && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="card"
+                            style={{ marginTop: 'var(--spacing-xl)' }}
+                        >
+                            <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
+                                <h3 style={{
+                                    fontSize: 'var(--font-size-2xl)',
+                                    fontWeight: 700,
+                                    marginBottom: 'var(--spacing-md)',
+                                    color: 'var(--color-dark-gray)',
+                                }}>
+                                    Compliance Result
+                                </h3>
+                                <div style={{
+                                    fontSize: 'var(--font-size-3xl)',
+                                    fontWeight: 700,
+                                    color: getStatusColor(result.status),
+                                    marginBottom: 'var(--spacing-sm)',
+                                }}>
+                                    {result.status.replace('_', ' ')}
+                                </div>
+                                <div style={{
+                                    fontSize: 'var(--font-size-sm)',
+                                    color: 'var(--color-gray)',
+                                }}>
+                                    Record #{result.id}
+                                </div>
+                            </div>
+
+                            <div style={{
+                                display: 'grid',
+                                gap: 'var(--spacing-md)',
+                                padding: 'var(--spacing-lg)',
+                                background: 'var(--color-off-white)',
+                                borderRadius: 'var(--radius-lg)',
+                            }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: 'var(--color-gray)', fontSize: 'var(--font-size-sm)' }}>
+                                        Risk Score
+                                    </span>
+                                    <span style={{
+                                        fontWeight: 700,
+                                        fontSize: 'var(--font-size-lg)',
+                                        color: result.risk_score < 30 ? 'var(--color-success)' :
+                                            result.risk_score < 60 ? 'var(--color-warning)' :
+                                                'var(--color-error)',
+                                    }}>
+                                        {result.risk_score}/100
                                     </span>
                                 </div>
 
-                                <div className="grid" style={{ gap: '1rem' }}>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-400">Record ID</span>
-                                        <span className="font-semibold">#{result.id}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-400">Risk Score</span>
-                                        <span className="font-semibold text-red">{result.risk_score}/100</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-400">FDC Verified</span>
-                                        <span className={result.fdc_verified ? 'text-green' : 'text-red'}>
-                                            {result.fdc_verified ? '✓ Yes' : '✗ No'}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-400">Asset Price</span>
-                                        <span className="font-semibold">${result.asset_price?.toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-400">Volatility</span>
-                                        <span className="font-semibold">{(result.volatility * 100)?.toFixed(1)}%</span>
-                                    </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: 'var(--color-gray)', fontSize: 'var(--font-size-sm)' }}>
+                                        FDC Verified
+                                    </span>
+                                    <span style={{
+                                        fontWeight: 600,
+                                        color: result.fdc_verified ? 'var(--color-success)' : 'var(--color-error)',
+                                    }}>
+                                        {result.fdc_verified ? '✓ Yes' : '✗ No'}
+                                    </span>
                                 </div>
 
-                                <div className="mt-lg" style={{ padding: '1rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: 'var(--radius-md)' }}>
-                                    <p className="text-sm text-gray-300">
-                                        <strong>Recommendation:</strong> {result.recommendation}
-                                    </p>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: 'var(--color-gray)', fontSize: 'var(--font-size-sm)' }}>
+                                        Asset Price
+                                    </span>
+                                    <span style={{ fontWeight: 600 }}>
+                                        ${result.asset_price?.toFixed(2)}
+                                    </span>
                                 </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
-            </motion.div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ color: 'var(--color-gray)', fontSize: 'var(--font-size-sm)' }}>
+                                        Volatility
+                                    </span>
+                                    <span style={{ fontWeight: 600 }}>
+                                        {(result.volatility * 100)?.toFixed(1)}%
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style={{
+                                marginTop: 'var(--spacing-lg)',
+                                padding: 'var(--spacing-md)',
+                                background: 'var(--color-red-light)',
+                                borderRadius: 'var(--radius-lg)',
+                            }}>
+                                <p style={{
+                                    fontSize: 'var(--font-size-sm)',
+                                    color: 'var(--color-medium-gray)',
+                                    lineHeight: 1.6,
+                                }}>
+                                    <strong>Recommendation:</strong> {result.recommendation}
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </div>
     );
 };

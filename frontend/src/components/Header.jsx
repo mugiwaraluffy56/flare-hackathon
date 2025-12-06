@@ -10,114 +10,144 @@ const Header = () => {
     };
 
     return (
-        <motion.header
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="glass-card"
-            style={{
-                position: 'sticky',
-                top: '1rem',
-                zIndex: 50,
-                margin: '1rem auto',
-                maxWidth: '1280px',
-                padding: '1rem 2rem',
-            }}
-        >
-            <div className="flex justify-between items-center">
-                {/* Logo */}
-                <div className="flex items-center gap-md">
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="flex items-center gap-sm"
-                    >
-                        <div
-                            style={{
-                                width: '40px',
-                                height: '40px',
-                                background: 'linear-gradient(135deg, var(--color-red-primary), var(--color-red-dark))',
-                                borderRadius: 'var(--radius-lg)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 800,
-                                fontSize: '1.25rem',
-                            }}
-                        >
-                            F
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-bold" style={{ lineHeight: 1.2 }}>
-                                FACE
-                            </h1>
-                            <p className="text-sm text-gray-400" style={{ lineHeight: 1 }}>
-                                Flare Compliance Engine
-                            </p>
-                        </div>
-                    </motion.div>
-                </div>
+        <header style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 100,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            borderBottom: '1px solid rgba(0, 0, 0, 0.04)',
+        }}>
+            <div className="container" style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                height: '72px',
+            }}>
+                {/* Logo - Flare style */}
+                <motion.div
+                    whileHover={{ opacity: 0.8 }}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        cursor: 'pointer',
+                    }}
+                >
+                    <div style={{
+                        width: '36px',
+                        height: '36px',
+                        background: 'linear-gradient(135deg, #ff3b30 0%, #ff6b5e 100%)',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontWeight: 700,
+                        fontSize: '1.25rem',
+                    }}>
+                        F
+                    </div>
+                    <span style={{
+                        fontSize: '1.375rem',
+                        fontWeight: 600,
+                        color: '#666',
+                        letterSpacing: '-0.01em',
+                    }}>
+                        FACE
+                    </span>
+                </motion.div>
 
-                {/* Wallet Connection */}
-                <div className="flex items-center gap-md">
+                {/* Wallet Connection - Flare style */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     {isConnected && !isCorrectNetwork && (
                         <motion.button
-                            whileHover={{ scale: 1.02 }}
+                            whileHover={{ opacity: 0.8 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={switchToCoston2}
-                            className="btn btn-secondary"
-                            style={{ fontSize: 'var(--font-size-sm)' }}
+                            style={{
+                                fontSize: '0.875rem',
+                                padding: '0.5rem 1rem',
+                                background: 'transparent',
+                                color: '#ff3b30',
+                                border: '1.5px solid #ff3b30',
+                                borderRadius: '8px',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                            }}
                         >
-                            Switch to Coston2
+                            Switch Network
                         </motion.button>
                     )}
 
                     {isConnected ? (
-                        <div className="flex items-center gap-sm">
-                            <div
-                                className="glass-card"
-                                style={{
-                                    padding: '0.5rem 1rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: '8px',
-                                        height: '8px',
-                                        borderRadius: '50%',
-                                        background: isCorrectNetwork ? 'var(--color-success)' : 'var(--color-warning)',
-                                        boxShadow: isCorrectNetwork
-                                            ? '0 0 10px var(--color-success)'
-                                            : '0 0 10px var(--color-warning)',
-                                    }}
-                                    className="animate-pulse"
-                                />
-                                <span className="text-sm font-medium">{formatAddress(account)}</span>
+                        <>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                padding: '0.5rem 1rem',
+                                background: '#f8f8f8',
+                                borderRadius: '8px',
+                            }}>
+                                <div style={{
+                                    width: '6px',
+                                    height: '6px',
+                                    borderRadius: '50%',
+                                    background: isCorrectNetwork ? '#30d158' : '#ff9f0a',
+                                }} />
+                                <span style={{
+                                    fontSize: '0.875rem',
+                                    fontWeight: 500,
+                                    color: '#666',
+                                }}>
+                                    {formatAddress(account)}
+                                </span>
                             </div>
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
+                                whileHover={{ opacity: 0.7 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={disconnectWallet}
-                                className="btn btn-ghost"
-                                style={{ fontSize: 'var(--font-size-sm)', padding: '0.5rem 1rem' }}
+                                style={{
+                                    fontSize: '0.875rem',
+                                    padding: '0.5rem 1rem',
+                                    background: 'transparent',
+                                    color: '#666',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    fontWeight: 500,
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s',
+                                }}
                             >
                                 Disconnect
                             </motion.button>
-                        </div>
+                        </>
                     ) : (
                         <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            whileHover={{ opacity: 0.9 }}
+                            whileTap={{ scale: 0.98 }}
                             onClick={connectWallet}
-                            className="btn btn-primary"
+                            style={{
+                                fontSize: '0.9375rem',
+                                padding: '0.625rem 1.5rem',
+                                background: '#ff3b30',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: '0 2px 8px rgba(255, 59, 48, 0.2)',
+                            }}
                         >
                             Connect Wallet
                         </motion.button>
                     )}
                 </div>
             </div>
-        </motion.header>
+        </header>
     );
 };
 

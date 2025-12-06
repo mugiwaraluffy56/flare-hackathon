@@ -39,7 +39,6 @@ const Dashboard = () => {
             const txs = response.data || [];
             setTransactions(txs);
 
-            // Calculate stats
             const stats = {
                 total: txs.length,
                 approved: txs.filter(t => t.status === 'APPROVED').length,
@@ -59,48 +58,33 @@ const Dashboard = () => {
             'APPROVED': 'badge-success',
             'REJECTED': 'badge-error',
             'UNDER_REVIEW': 'badge-warning',
-            'PENDING': 'badge-info',
+            'PENDING': 'badge-neutral',
         };
-        return statusMap[status] || 'badge-info';
+        return statusMap[status] || 'badge-neutral';
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleString();
+        return new Date(dateString).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     };
-
-    const StatCard = ({ title, value, color, icon }) => (
-        <motion.div
-            whileHover={{ scale: 1.02, y: -4 }}
-            className="glass-card"
-            style={{ padding: '1.5rem', flex: 1 }}
-        >
-            <div className="flex justify-between items-start mb-md">
-                <div>
-                    <p className="text-sm text-gray-400 mb-sm">{title}</p>
-                    <h3 className="text-3xl font-bold" style={{ color }}>{value}</h3>
-                </div>
-                <div style={{
-                    fontSize: '2rem',
-                    opacity: 0.3,
-                }}>
-                    {icon}
-                </div>
-            </div>
-        </motion.div>
-    );
 
     if (!isConnected) {
         return (
-            <div className="container" style={{ paddingTop: '4rem', textAlign: 'center' }}>
+            <div className="hero">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="glass-card"
-                    style={{ padding: '3rem', maxWidth: '500px', margin: '0 auto' }}
                 >
-                    <h2 className="text-2xl font-bold mb-md">Connect Your Wallet</h2>
-                    <p className="text-gray-300">
-                        Please connect your wallet to view your compliance dashboard
+                    <h1 className="hero-title">
+                        Welcome to <span style={{ color: 'var(--color-red)' }}>FACE</span>
+                    </h1>
+                    <p className="hero-subtitle">
+                        Connect your wallet to access the Flare Autonomous Compliance Engine
                     </p>
                 </motion.div>
             </div>
@@ -108,124 +92,152 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ paddingTop: 'var(--spacing-2xl)', paddingBottom: 'var(--spacing-3xl)' }}>
+            {/* Page Header */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginBottom: 'var(--spacing-2xl)' }}
             >
-                {/* Header */}
-                <div className="mb-xl">
-                    <h2 className="text-4xl font-extrabold mb-sm">
-                        Compliance <span className="text-red">Dashboard</span>
-                    </h2>
-                    <p className="text-lg text-gray-300">
-                        Real-time overview of your compliance checks
-                    </p>
-                </div>
+                <h1 className="section-title">Compliance Dashboard</h1>
+                <p className="section-subtitle">
+                    Real-time overview of your compliance checks
+                </p>
+            </motion.div>
 
-                {/* Stats Grid */}
-                <div className="flex gap-md mb-xl" style={{ flexWrap: 'wrap' }}>
-                    <StatCard
-                        title="Total Checks"
-                        value={stats.total}
-                        color="var(--color-white)"
-                        icon="📊"
-                    />
-                    <StatCard
-                        title="Approved"
-                        value={stats.approved}
-                        color="var(--color-success)"
-                        icon="✓"
-                    />
-                    <StatCard
-                        title="Rejected"
-                        value={stats.rejected}
-                        color="var(--color-error)"
-                        icon="✗"
-                    />
-                    <StatCard
-                        title="Under Review"
-                        value={stats.underReview}
-                        color="var(--color-warning)"
-                        icon="⏳"
-                    />
-                </div>
+            {/* Stats Grid */}
+            <div className="stats-grid">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="stat-card"
+                >
+                    <div className="stat-value" style={{ color: 'var(--color-dark-gray)' }}>
+                        {stats.total}
+                    </div>
+                    <div className="stat-label">Total Checks</div>
+                </motion.div>
 
-                {/* Transactions Table */}
-                <div className="glass-card" style={{ padding: '2rem' }}>
-                    <h3 className="text-2xl font-bold mb-lg">Recent Transactions</h3>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="stat-card"
+                >
+                    <div className="stat-value" style={{ color: 'var(--color-success)' }}>
+                        {stats.approved}
+                    </div>
+                    <div className="stat-label">Approved</div>
+                </motion.div>
 
-                    {loading ? (
-                        <div className="text-center" style={{ padding: '3rem' }}>
-                            <div className="animate-pulse text-gray-400">Loading...</div>
-                        </div>
-                    ) : transactions.length === 0 ? (
-                        <div className="text-center" style={{ padding: '3rem' }}>
-                            <p className="text-gray-400">No transactions yet</p>
-                            <p className="text-sm text-gray-500 mt-sm">Submit your first asset for compliance check</p>
-                        </div>
-                    ) : (
-                        <div style={{ overflowX: 'auto' }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                <thead>
-                                    <tr style={{ borderBottom: '1px solid var(--glass-border)' }}>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>ID</th>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>Asset</th>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>Amount</th>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>Risk Score</th>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>Status</th>
-                                        <th style={{ padding: '1rem', textAlign: 'left', color: 'var(--color-gray-400)', fontWeight: 600 }}>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {transactions.map((tx, index) => (
-                                        <motion.tr
-                                            key={tx.id}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.05 }}
-                                            style={{
-                                                borderBottom: '1px solid var(--glass-border)',
-                                            }}
-                                            whileHover={{
-                                                backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                                            }}
-                                        >
-                                            <td style={{ padding: '1rem' }}>
-                                                <span className="font-medium">#{tx.id}</span>
-                                            </td>
-                                            <td style={{ padding: '1rem' }}>
-                                                <span className="font-semibold">{tx.asset_type}</span>
-                                            </td>
-                                            <td style={{ padding: '1rem' }}>
-                                                {tx.amount.toFixed(4)}
-                                            </td>
-                                            <td style={{ padding: '1rem' }}>
-                                                <span style={{
-                                                    color: tx.risk_score < 30 ? 'var(--color-success)' :
-                                                        tx.risk_score < 60 ? 'var(--color-warning)' :
-                                                            'var(--color-error)',
-                                                    fontWeight: 600,
-                                                }}>
-                                                    {tx.risk_score}/100
-                                                </span>
-                                            </td>
-                                            <td style={{ padding: '1rem' }}>
-                                                <span className={`badge ${getStatusBadge(tx.status)}`}>
-                                                    {tx.status}
-                                                </span>
-                                            </td>
-                                            <td style={{ padding: '1rem', color: 'var(--color-gray-400)', fontSize: 'var(--font-size-sm)' }}>
-                                                {formatDate(tx.created_at)}
-                                            </td>
-                                        </motion.tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="stat-card"
+                >
+                    <div className="stat-value" style={{ color: 'var(--color-error)' }}>
+                        {stats.rejected}
+                    </div>
+                    <div className="stat-label">Rejected</div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="stat-card"
+                >
+                    <div className="stat-value" style={{ color: 'var(--color-warning)' }}>
+                        {stats.underReview}
+                    </div>
+                    <div className="stat-label">Under Review</div>
+                </motion.div>
+            </div>
+
+            {/* Transactions Table */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+            >
+                <h2 style={{
+                    fontSize: 'var(--font-size-2xl)',
+                    fontWeight: 700,
+                    marginBottom: 'var(--spacing-lg)',
+                    color: 'var(--color-dark-gray)',
+                }}>
+                    Recent Transactions
+                </h2>
+
+                {loading ? (
+                    <div className="card" style={{ padding: 'var(--spacing-3xl)', textAlign: 'center' }}>
+                        <div style={{ color: 'var(--color-gray)' }}>Loading...</div>
+                    </div>
+                ) : transactions.length === 0 ? (
+                    <div className="card" style={{ padding: 'var(--spacing-3xl)', textAlign: 'center' }}>
+                        <p style={{ color: 'var(--color-gray)', marginBottom: 'var(--spacing-sm)' }}>
+                            No transactions yet
+                        </p>
+                        <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-gray)' }}>
+                            Submit your first asset for compliance check
+                        </p>
+                    </div>
+                ) : (
+                    <div className="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Asset</th>
+                                    <th>Amount</th>
+                                    <th>Risk Score</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {transactions.map((tx, index) => (
+                                    <motion.tr
+                                        key={tx.id}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.05 }}
+                                    >
+                                        <td>
+                                            <span style={{ fontWeight: 600, color: 'var(--color-medium-gray)' }}>
+                                                #{tx.id}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style={{ fontWeight: 600 }}>{tx.asset_type}</span>
+                                        </td>
+                                        <td>{tx.amount.toFixed(4)}</td>
+                                        <td>
+                                            <span style={{
+                                                fontWeight: 600,
+                                                color: tx.risk_score < 30 ? 'var(--color-success)' :
+                                                    tx.risk_score < 60 ? 'var(--color-warning)' :
+                                                        'var(--color-error)',
+                                            }}>
+                                                {tx.risk_score}/100
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className={`badge ${getStatusBadge(tx.status)}`}>
+                                                {tx.status.replace('_', ' ')}
+                                            </span>
+                                        </td>
+                                        <td style={{ color: 'var(--color-gray)' }}>
+                                            {formatDate(tx.created_at)}
+                                        </td>
+                                    </motion.tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </motion.div>
         </div>
     );
