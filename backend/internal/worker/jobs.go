@@ -4,10 +4,10 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/face/backend/internal/blockchain"
-	"github.com/face/backend/internal/logger"
-	"github.com/face/backend/internal/metrics"
-	"github.com/face/backend/internal/models"
+	"github.com/xenora/backend/internal/blockchain"
+	"github.com/xenora/backend/internal/logger"
+	"github.com/xenora/backend/internal/metrics"
+	"github.com/xenora/backend/internal/models"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

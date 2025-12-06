@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/face/backend/internal/models"
+	"github.com/xenora/backend/internal/models"
 )
 
 // Client handles FDC (Flare Data Connector) interactions

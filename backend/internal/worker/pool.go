@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/face/backend/internal/logger"
+	"github.com/xenora/backend/internal/logger"
 	"go.uber.org/zap"
 )
 

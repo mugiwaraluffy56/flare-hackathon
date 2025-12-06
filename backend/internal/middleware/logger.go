@@ -3,7 +3,7 @@ package middleware
 import (
 	"time"
 
-	"github.com/face/backend/internal/logger"
+	"github.com/xenora/backend/internal/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"go.uber.org/zap"

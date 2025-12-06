@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/face/backend/internal/models"
+	"github.com/xenora/backend/internal/models"
 	"gorm.io/gorm"
 )
 

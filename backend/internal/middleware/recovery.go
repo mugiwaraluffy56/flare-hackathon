@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/face/backend/internal/logger"
+	"github.com/xenora/backend/internal/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

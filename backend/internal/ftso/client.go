@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/face/backend/internal/models"
+	"github.com/xenora/backend/internal/models"
 )
 
 // Client handles FTSO (Flare Time Series Oracle) interactions

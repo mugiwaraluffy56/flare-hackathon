@@ -51,7 +51,16 @@ const Dashboard = () => {
                 params: { user: account, limit: 20 }
             });
 
-            const txs = response.data || [];
+            // Handle standardized API response format { success: true, data: [...] }
+            const txs = response.data?.data || [];
+
+            if (!Array.isArray(txs)) {
+                console.error("Unexpected API response format:", response.data);
+                setTransactions([]);
+                setLoading(false);
+                return;
+            }
+
             setTransactions(txs);
 
             const stats = {
@@ -451,8 +460,8 @@ const Dashboard = () => {
                                                         <div className="w-24 bg-base-200 rounded-full h-2">
                                                             <div
                                                                 className={`h-2 rounded-full ${tx.risk_score < 30 ? 'bg-green-500' :
-                                                                        tx.risk_score < 60 ? 'bg-yellow-500' :
-                                                                            tx.risk_score < 85 ? 'bg-orange-500' : 'bg-red-500'
+                                                                    tx.risk_score < 60 ? 'bg-yellow-500' :
+                                                                        tx.risk_score < 85 ? 'bg-orange-500' : 'bg-red-500'
                                                                     }`}
                                                                 style={{ width: `${tx.risk_score}%` }}
                                                             ></div>
